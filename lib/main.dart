@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movieswap/appbar_unten.dart';
+import 'package:movieswap/models/swipe_session.dart';
+import 'package:movieswap/profil.dart';
 import './homepage.dart';
+import 'swipeseiten/swipehome/swipe_home.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +18,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Homepage(),
+      home: AppbarUnten(),
+      routes: {
+        SwipeHome.routeName: (context) => SwipeHome(),
+        Homepage.routeName: (context) => Homepage(),
+        Profil.routeName: (context) => Profil(),
+      },
     );
   }
 }

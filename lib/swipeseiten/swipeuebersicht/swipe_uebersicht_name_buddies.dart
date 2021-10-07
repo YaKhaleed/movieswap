@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:movieswap/swipeseiten/swipehome/swipe_home.dart';
 
 class SwipeUbersichtNameBuddies extends StatelessWidget {
-  Function dataInput;
+  String name;
+  List<String> buddies;
 
-  SwipeUbersichtNameBuddies(this.dataInput);
+  SwipeUbersichtNameBuddies(this.name, this.buddies);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 30),
             child: Center(
               child: Text(
-                "$dataInput",
+                "kp",
                 style: TextStyle(fontSize: 24),
               ),
             ),
@@ -23,7 +24,7 @@ class SwipeUbersichtNameBuddies extends StatelessWidget {
           Row(
             children: [
               Text(
-                "Name: $dataInput",
+                "Name: $name",
                 textAlign: TextAlign.start,
               ),
             ],
@@ -31,7 +32,7 @@ class SwipeUbersichtNameBuddies extends StatelessWidget {
           Row(
             children: [
               Text(
-                "Buddies: $dataInput",
+                "Buddies: ${buddies.join(", ")}",
                 textAlign: TextAlign.start,
               ),
             ],

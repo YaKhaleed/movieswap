@@ -2,14 +2,17 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:movieswap/dummy_data.dart';
+import 'package:movieswap/models/swipe_session.dart';
+import 'package:movieswap/swipeseiten/swipehome/swipe_home.dart';
 import 'package:movieswap/swipeseiten/swipeuebersicht/swipe_uebersicht.dart';
 
 import '../../appbar_unten.dart';
 
 class SwipeSession2 extends StatefulWidget {
   final Function dataInput;
+  final List<SwipeSession> swipesession;
 
-  SwipeSession2({this.dataInput});
+  SwipeSession2({this.dataInput, this.swipesession});
   @override
   _SwipeSession2State createState() => _SwipeSession2State();
 }
@@ -54,14 +57,18 @@ class _SwipeSession2State extends State<SwipeSession2> {
       return;
     }
 
-    // widget.dataInput(
-    //   plattformwahl,
-    //   genrewahl,
-    // );
+    widget.dataInput(
+      plattformwahl,
+      genrewahl,
+    );
+    //Navigator.of(context).pop();
+    _weiterUebersicht(context);
+  }
 
+  void _weiterUebersicht(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) {
-        return SwipeSessionUebersicht(widget.dataInput);
+        return SwipeSessionUebersicht(widget.swipesession);
       }),
     );
   }
@@ -69,12 +76,13 @@ class _SwipeSession2State extends State<SwipeSession2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: AppbarUnten(),
+      //bottomNavigationBar: AppbarUnten(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 30),
           child: Column(
             children: [
+              Text("${widget.swipesession.length}"),
               Text(
                 "Streaming Plattform:",
                 style: TextStyle(fontSize: 16),

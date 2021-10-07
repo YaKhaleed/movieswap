@@ -3,7 +3,73 @@ import 'package:movieswap/homepage.dart';
 import 'package:movieswap/profil.dart';
 import 'swipeseiten/swipehome/swipe_home.dart';
 
-class AppbarUnten extends StatelessWidget {
+class AppbarUnten extends StatefulWidget {
+  @override
+  _AppbarUntenState createState() => _AppbarUntenState();
+}
+
+class _AppbarUntenState extends State<AppbarUnten> {
+  final List<Map<String, Object>> _seiten = [
+    {
+      "seite": Homepage(),
+      "titel": "Hauptseite",
+    },
+    {
+      "seite": SwipeHome(),
+      "titel": "Swipeseite",
+    },
+    {
+      "seite": Profil(),
+      "titel": "Profilseite",
+    },
+  ];
+
+  int _seitenindex = 0;
+
+  void _gewaehlteSeite(int index) {
+    setState(() {
+      _seitenindex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          _seiten[_seitenindex]["titel"],
+        ),
+      ),
+      body: _seiten[_seitenindex]["seite"],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _gewaehlteSeite,
+        currentIndex: _seitenindex,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+            ),
+            label: "Hauptseite",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.movie,
+            ),
+            label: "MovieSwap",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+            ),
+            label: "Dein Profil",
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/*class AppbarUnten extends StatelessWidget {
   AppbarUnten();
 
   void zuHomepage(BuildContext ctx) {
@@ -72,3 +138,4 @@ class AppbarUnten extends StatelessWidget {
     );
   }
 }
+*/

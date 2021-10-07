@@ -1,20 +1,20 @@
 import "package:flutter/material.dart";
 import 'package:movieswap/appbar_unten.dart';
+import 'package:movieswap/swipeseiten/swipehome/swipe_home.dart';
 
 class Homepage extends StatefulWidget {
+  static const routeName = "/homepage";
+
   @override
   _HomepageState createState() => _HomepageState();
 }
 
 class _HomepageState extends State<Homepage> {
   Function homeButton;
+  String titel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: AppbarUnten(),
-/*      appBar: AppBar(
-        title: Text("MovieSwipe"),
-      ),*/
       body: Padding(
         padding: const EdgeInsets.only(top: 23),
         child: Center(
@@ -26,12 +26,13 @@ class _HomepageState extends State<Homepage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 200,
+                      height: 150,
                       width: 350,
                       child: Card(
                         child: TextButton(
                           onPressed: () {
-                            AppbarUnten().zuSwipeHome(context);
+                            Navigator.of(context)
+                                .pushNamed(SwipeHome.routeName);
                           },
                           child: Column(
                             children: [
@@ -68,7 +69,7 @@ class _HomepageState extends State<Homepage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 200,
+                      height: 150,
                       width: 350,
                       child: Card(
                         child: TextButton(
@@ -108,7 +109,7 @@ class _HomepageState extends State<Homepage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     SizedBox(
-                      height: 200,
+                      height: 150,
                       width: 350,
                       child: Card(
                         child: TextButton(
