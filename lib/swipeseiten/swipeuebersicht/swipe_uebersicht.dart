@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:movieswap/models/swipe_session.dart';
-import 'package:movieswap/swipeseiten/swipesession/swipe_session1.dart';
-import 'package:movieswap/swipeseiten/swipesession/swipe_session2.dart';
-import 'package:movieswap/swipeseiten/swipeuebersicht/swipe_uebersicht_genre_und_plattform.dart';
+import 'package:movieswap/swipeseiten/swipehome/swipe_home.dart';
+import 'package:movieswap/swipeseiten/sessionerstellen/swipe_session1.dart';
+import 'package:movieswap/swipeseiten/sessionerstellen/swipe_session2.dart';
+import 'package:movieswap/swipeseiten/swipeuebersicht/swipe_uebersicht_plattform_und_genre.dart';
 import 'package:movieswap/swipeseiten/swipeuebersicht/swipe_uebersicht_name_buddies.dart';
 
 import '../../appbar_unten.dart';
 
 class SwipeSessionUebersicht extends StatelessWidget {
-  Function dataInput;
-  SwipeSessionUebersicht(this.dataInput);
-  final List<SwipeSession> _swipeSession = [];
+  final List<SwipeSession> swipeSession;
+  SwipeSessionUebersicht(this.swipeSession);
 
-  void _nameUndBuddies(String name, List<String> buddies) {}
+  void _anfrageSchicken(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return SwipeHome(swipesession: swipeSession);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: AppbarUnten(),
       body: Padding(
         padding: const EdgeInsets.only(top: 30),
         child: Column(
@@ -28,8 +32,13 @@ class SwipeSessionUebersicht extends StatelessWidget {
                     decoration: TextDecoration.underline, fontSize: 30),
               ),
             ),
-            SwipeUbersichtNameBuddies(SwipeSession1().dataInput),
-            SwipeUebersichtGenrePlattform(SwipeSession2().dataInput),
+            Text("${swipeSession.length}"),
+            SwipeUbersichtNameBuddies(
+                swipeSession[swipeSession.length - 1].name,
+                swipeSession[swipeSession.length - 1].gewaehlteBuddies),
+            SwipeUebersichtPlattformGenre(
+                swipeSession[swipeSession.length - 1].gewaehltePlattform,
+                swipeSession[swipeSession.length - 1].gewaehltesGenre),
             Padding(
               padding: const EdgeInsets.only(left: 30),
               child: Row(
@@ -56,7 +65,9 @@ class SwipeSessionUebersicht extends StatelessWidget {
                       backgroundColor: MaterialStateProperty.all(Colors.white),
                       foregroundColor: MaterialStateProperty.all(Colors.black),
                     ),
-                    onPressed: null,
+                    onPressed: () {
+                      _anfrageSchicken(context);
+                    },
                     child: Text(
                       "Anfrage schicken",
                     ),

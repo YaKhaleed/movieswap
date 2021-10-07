@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:movieswap/dummy_data.dart';
 import 'package:movieswap/models/buddies.dart';
+import 'package:movieswap/models/swipe_session.dart';
+import 'package:movieswap/swipeseiten/swipehome/swipe_home.dart';
 
 import '../../appbar_unten.dart';
 import 'swipe_session2.dart';
 
 class SwipeSession1 extends StatefulWidget {
   final Function dataInput;
+  final List<SwipeSession> swipesession;
 
-  SwipeSession1({this.dataInput});
+  SwipeSession1(this.dataInput, this.swipesession);
 
   @override
   _SwipeSession1State createState() => _SwipeSession1State();
@@ -32,7 +35,7 @@ class _SwipeSession1State extends State<SwipeSession1> {
 
   void _datenUebergabe() {
     final nameSession = _nameSession.text;
-    final gewaehlteBuddies = _userChecked;
+    final List<String> gewaehlteBuddies = _userChecked;
 
     if (nameSession.isEmpty || gewaehlteBuddies.isEmpty) {
       return;
@@ -40,14 +43,32 @@ class _SwipeSession1State extends State<SwipeSession1> {
 
     //Vermutung, warum dataInput noch nciht klappt:
     //SwipeSession1 wird keine Funktion übergeben udn somit router etc null
-    // widget.dataInput(
-    //   nameSession,
-    //   gewaehlteBuddies,
-    // );
+    widget.dataInput(
+      nameSession,
+      gewaehlteBuddies,
+    );
+    //Navigator.of(context).pop();
+    _weiter(context);
+  }
 
+  void _swipeSessionErstellen2(List<String> plattform, List<String> genre) {
+    setState(() {
+      widget.swipesession[widget.swipesession.length - 1].gewaehltePlattform =
+          plattform;
+      widget.swipesession[widget.swipesession.length - 1].gewaehltesGenre =
+          genre;
+      //widget.swipesession.insert(4, genre);
+      //SwipeHome().daten2.add(plattform);
+      //SwipeHome().daten2.add(genre);
+    });
+  }
+
+  void _weiter(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) {
-        return SwipeSession2();
+        return SwipeSession2(
+            dataInput: _swipeSessionErstellen2,
+            swipesession: widget.swipesession);
       }),
     );
   }
@@ -55,7 +76,7 @@ class _SwipeSession1State extends State<SwipeSession1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: AppbarUnten(),
+      //bottomNavigationBar: AppbarUnten(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 30),
@@ -96,6 +117,7 @@ class _SwipeSession1State extends State<SwipeSession1> {
               SizedBox(
                 height: 90,
               ),
+              Text("${widget.swipesession.length}"),
               Text(
                 "Wähle deine Buddies aus:",
                 style: TextStyle(fontSize: 16),
